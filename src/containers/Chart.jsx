@@ -90,13 +90,22 @@ const Chart = () => {
 
     const chart = createChart(ref.current, chartProps);
     prepareChart(chart, ws);
+
+    // Make Chart Responsive with screen resize
+    new ResizeObserver((entries) => {
+      if (entries.length === 0 || entries[0].target !== ref.current) {
+        return;
+      }
+      const newRect = entries[0].contentRect;
+      chart.applyOptions({ height: newRect.height, width: newRect.width });
+    }).observe(ref.current);
   }, [selectedAsset, selectedInterval]);
 
   return (
     <div>
-      <div className="h-20 w-full bg-gray-900 border-gray-900 border-b-4">
-        <div className="flex flex-row justify-between px-32 pt-5">
-          <div className="text-white text-xl pt-1">
+      <div className="h-28 md:h-20 w-full bg-gray-900 border-gray-900 border-b-4">
+        <div className="flex md:flex-row flex-col md:justify-between space-y-2 md:px-32 items-center pt-4">
+          <div className="text-white text-xl md:pt-2">
             Binance Candlestick Chart
           </div>
           <div className="flex flex-row space-x-10 z-50">
@@ -106,7 +115,7 @@ const Chart = () => {
         </div>
       </div>
       <div>
-        <div className="pt-2 pl-2 text-base">
+        <div className="pt-2 pl-3 md:pl-2 text-base">
           <h1>Asset: {selectedAsset}</h1>
           <h1>Interval: {selectedInterval}</h1>
         </div>
