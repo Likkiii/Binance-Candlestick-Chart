@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 import Dropdown from "react-select";
 
@@ -59,7 +59,7 @@ const Chart = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          const cdata = data.map((d) => {
+          const candle = data.map((d) => {
             return {
               time: d[0] / 1000,
               open: parseFloat(d[1]),
@@ -68,7 +68,7 @@ const Chart = () => {
               close: parseFloat(d[4]),
             };
           });
-          candleStickChart.setData(cdata);
+          candleStickChart.setData(candle);
         })
         .catch((err) => console.log(err));
 
@@ -88,6 +88,7 @@ const Chart = () => {
         candleStickChart.update(binanceData);
       };
     };
+
     const chart = createChart(ref.current, chartProps);
     prepareChart(chart, ws);
   }, [selectedAsset, selectedInterval]);
