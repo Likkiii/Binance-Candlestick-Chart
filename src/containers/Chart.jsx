@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 import Dropdown from "react-select";
+import { render } from "@testing-library/react";
 
 const Chart = () => {
   const ref = useRef();
@@ -17,7 +18,6 @@ const Chart = () => {
     { value: "eosusdt", label: "EOS/USDT" },
     { value: "trxusdt", label: "TRX/USDT" },
   ];
-  console.log(selectedAsset);
 
   const duration = [
     { value: "1m", label: "1m" },
@@ -58,7 +58,6 @@ const Chart = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           const candle = data.map((d) => {
             return {
               time: d[0] / 1000,
@@ -106,7 +105,7 @@ const Chart = () => {
           </div>
         </div>
       </div>
-      <div className="pl-20 pt-10" ref={ref} />
+      <div className="pl-20 pt-5" ref={ref} />
     </div>
   );
 };
