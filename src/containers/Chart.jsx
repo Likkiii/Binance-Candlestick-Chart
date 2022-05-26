@@ -29,18 +29,14 @@ const Chart = () => {
 
   const handleAssetChange = (selectedAsset) => {
     setSelectedAsset(selectedAsset.value);
-    console.log(selectedAsset.value);
   };
 
   const handleIntervalChange = (selectedInterval) => {
     setSelectedInterval(selectedInterval.value);
-    console.log(selectedInterval.value);
   };
 
   useEffect(() => {
     const chartProps = {
-      // width: window.innerWidth * 0.8,
-      // height: window.innerHeight * 0.8,
       timeScale: {
         timeVisible: true,
         secondsVisible: false,
@@ -93,15 +89,6 @@ const Chart = () => {
     const chart = createChart(ref.current, chartProps);
     prepareChart(chart, ws);
   }, [selectedAsset, selectedInterval]);
-
-  // // Make Chart Responsive with screen resize
-  // new ResizeObserver((entries) => {
-  //   if (entries.length === 0 || entries[0].target !== ref.current) {
-  //     return;
-  //   }
-  //   const newRect = entries[0].contentRect;
-  //   chart.applyOptions({ height: newRect.height, width: newRect.width });
-  // }).observe(ref.current);
 
   return (
     <div>
