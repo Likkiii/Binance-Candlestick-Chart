@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 import Dropdown from "react-select";
-import { render } from "@testing-library/react";
 
 const Chart = () => {
   const ref = useRef();
@@ -28,16 +27,18 @@ const Chart = () => {
 
   const handleAssetChange = (selectedAsset) => {
     setSelectedAsset(selectedAsset.value);
+    console.log(selectedAsset.value);
   };
 
   const handleIntervalChange = (selectedInterval) => {
     setSelectedInterval(selectedInterval.value);
+    console.log(selectedInterval.value);
   };
 
   useEffect(() => {
     const chartProps = {
       width: window.innerWidth * 0.8,
-      height: 600,
+      height: 550,
       timeScale: {
         timeVisible: true,
         secondsVisible: false,
@@ -54,7 +55,7 @@ const Chart = () => {
       const candleStickChart = chart.addCandlestickSeries();
 
       fetch(
-        `https://api.binance.com/api/v3/klines?symbol=${tokenName.toUpperCase()}&interval=${selectedInterval}&limit=1000`
+        `https://api.binance.com/api/v3/klines?symbol=${tokenName.toUpperCase()}&interval=${interval}&limit=1000`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -82,8 +83,7 @@ const Chart = () => {
           close: parseFloat(c),
         };
 
-        setChartData(chartData.push(binanceData));
-
+        setChartData([...chartData, binanceData]);
         candleStickChart.update(binanceData);
       };
     };
@@ -105,7 +105,13 @@ const Chart = () => {
           </div>
         </div>
       </div>
-      <div className="pl-20 pt-5" ref={ref} />
+      <div>
+        <div className="pt-2 pl-2 text-base">
+          <h1>Asset: {selectedAsset}</h1>
+          <h1>Interval: {selectedInterval}</h1>
+        </div>
+        <div className="pl-20 pt-5" ref={ref} />
+      </div>
     </div>
   );
 };
