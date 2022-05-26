@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { createChart } from "lightweight-charts";
 import Dropdown from "react-select";
 
+import "./Chart.css";
+
 const Chart = () => {
   const ref = useRef();
 
@@ -37,8 +39,8 @@ const Chart = () => {
 
   useEffect(() => {
     const chartProps = {
-      width: window.innerWidth * 0.8,
-      height: 550,
+      // width: window.innerWidth * 0.8,
+      // height: window.innerHeight * 0.8,
       timeScale: {
         timeVisible: true,
         secondsVisible: false,
@@ -90,16 +92,16 @@ const Chart = () => {
 
     const chart = createChart(ref.current, chartProps);
     prepareChart(chart, ws);
-
-    // Make Chart Responsive with screen resize
-    new ResizeObserver((entries) => {
-      if (entries.length === 0 || entries[0].target !== ref.current) {
-        return;
-      }
-      const newRect = entries[0].contentRect;
-      chart.applyOptions({ height: newRect.height, width: newRect.width });
-    }).observe(ref.current);
   }, [selectedAsset, selectedInterval]);
+
+  // // Make Chart Responsive with screen resize
+  // new ResizeObserver((entries) => {
+  //   if (entries.length === 0 || entries[0].target !== ref.current) {
+  //     return;
+  //   }
+  //   const newRect = entries[0].contentRect;
+  //   chart.applyOptions({ height: newRect.height, width: newRect.width });
+  // }).observe(ref.current);
 
   return (
     <div>
@@ -115,11 +117,11 @@ const Chart = () => {
         </div>
       </div>
       <div>
-        <div className="pt-2 pl-3 md:pl-2 text-base">
+        <div className="pt-2 pl-3 md:pl-2 text-base 2xl:text-xl">
           <h1>Asset: {selectedAsset}</h1>
           <h1>Interval: {selectedInterval}</h1>
         </div>
-        <div className="pl-20 pt-5" ref={ref} />
+        <div className="chart pl-16 md:pl-20 pt-5" ref={ref} />
       </div>
     </div>
   );
